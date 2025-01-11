@@ -1,4 +1,4 @@
-# wander
+
 # Tourist Guide App
 
 Welcome to the **Tourism App**! This Flutter-based mobile application is designed to help users explore popular tourist destinations in Egypt. The app features a user-friendly interface with sections for suggestions, popular places, governments, and user profiles. Users can also add their favorite places to a dedicated favorites section.
