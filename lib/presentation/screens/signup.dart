@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:wander/core/routes.dart';
 import 'package:wander/core/user_credential.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -68,7 +68,7 @@ class _SignupScreenState extends State<SignupScreen> {
           controller: controller,
           validator: (value) {
             if (value == null || value.isEmpty) {
-              return 'Field cannot be empty';
+              return 'required';
             }
             if (value[0] != value[0].toUpperCase()) {
               return 'First letter must be capitalized';
@@ -130,7 +130,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   controller: emailController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Email cannot be empty';
+                      return 'required';
                     }
                     if (!value.contains('@') || !value.endsWith('.com')) {
                       return 'Email must contain @ and end with .com';
@@ -161,7 +161,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   controller: passwordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Password cannot be empty';
+                      return 'required';
                     }
                     if (value.length < 6) {
                       return 'Password must be at least 6 characters';
@@ -191,7 +191,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   controller: confirmPasswordController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please confirm your password';
+                      return 'required';
                     }
                     if (value != passwordController.text) {
                       return 'Passwords do not match';

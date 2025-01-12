@@ -72,10 +72,7 @@ class _LoginPageState extends State<LoginScreen> {
                       controller: emailController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Email cannot be empty';
-                        }
-                        if (!value.contains('@') || !value.endsWith('.com')) {
-                          return 'Email must contain @ and end with .com';
+                          return 'required';
                         }
                         return null;
                       },
@@ -91,10 +88,7 @@ class _LoginPageState extends State<LoginScreen> {
                       controller: passwordController,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Password cannot be empty';
-                        }
-                        if (value.length < 6) {
-                          return 'Password must be at least 6 characters';
+                          return 'required';
                         }
                         return null;
                       },
