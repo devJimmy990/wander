@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wander/core/user_credential.dart';
 import 'package:wander/data/model/item.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -12,7 +11,7 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  List<Item> fav = UserCredential.getInstance().favorites;
+  //List<Item> fav = UserCredential.getInstance().favorites;
   @override
   void initState() {
     super.initState();
@@ -85,8 +84,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     trailing: IconButton(
                       icon: Icon(Icons.delete, color: Colors.grey),
                       onPressed: () {
-                        UserCredential.getInstance()
-                            .removeFromFav(id: place.id);
+                        // UserCredential.getInstance()
+                        //     .removeFromFav(id: place.id);
                         setState(() {});
                       },
                     ),
