@@ -56,26 +56,26 @@ To enhance the application's functionality, `flutter_bloc` has been integrated w
 ## Screenshots
 
 ### **Login Page**
-![logIn](![Screenshot 2025-01-26 172900](https://github.com/user-attachments/assets/b95cfa61-1e12-424b-b329-ea3701540ea4)
+![Screenshot 2025-01-26 172900](https://github.com/user-attachments/assets/b95cfa61-1e12-424b-b329-ea3701540ea4)
 
 ### **Sign Up Page**
-![signUp]((![Screenshot 2025-01-26 172910](https://github.com/user-attachments/assets/c431bb5a-b72f-4330-bf6a-d5605c9b3003)
+![Screenshot 2025-01-26 172910](https://github.com/user-attachments/assets/c431bb5a-b72f-4330-bf6a-d5605c9b3003)
 
 ### **Home Page**
-![home](![Screenshot 2025-01-26 172936](https://github.com/user-attachments/assets/0d5c7652-5bbb-4f4a-b9fb-94062a089161)
+![Screenshot 2025-01-26 172936](https://github.com/user-attachments/assets/0d5c7652-5bbb-4f4a-b9fb-94062a089161)
 
 ### **Places Page**
-![places]([Screenshot 2025-01-26 172945](https://github.com/user-attachments/assets/ece02d2d-3c26-4342-a926-44e07e4d52cc)
+![Screenshot 2025-01-26 172945](https://github.com/user-attachments/assets/ece02d2d-3c26-4342-a926-44e07e4d52cc)
 
 ### **Landmarks Page**
-![landmark]([Screenshot 2025-01-26 172954](https://github.com/user-attachments/assets/a39ea08c-4fa5-4001-94ee-3a2b54c0a589)
+![Screenshot 2025-01-26 172954](https://github.com/user-attachments/assets/a39ea08c-4fa5-4001-94ee-3a2b54c0a589)
 
 
 ### **Favorites Page**
-![fav]([Screenshot 2025-01-26 173005](https://github.com/user-attachments/assets/2fa60580-842e-460f-af8a-fc8479cb619e)
+![Screenshot 2025-01-26 173005](https://github.com/user-attachments/assets/2fa60580-842e-460f-af8a-fc8479cb619e)
 
 ### **Profile Page**
-![profile]([Screenshot 2025-01-26 173014](https://github.com/user-attachments/assets/15980d66-c5ac-4d27-b23d-dcf792a680c7)
+![Screenshot 2025-01-26 173014](https://github.com/user-attachments/assets/15980d66-c5ac-4d27-b23d-dcf792a680c7)
 
 
 
