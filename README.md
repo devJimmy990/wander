@@ -48,7 +48,7 @@ To enhance the application's functionality, `flutter_bloc` has been integrated w
 - Supports adding new places to favorites and removing them.
 
 ### **LandmarkBloc**
-- Fetches landmark data for display on the screen.
+- Fetches landmark data to display on the screen.
 - Ensures seamless loading of landmark details.
 
 ---
