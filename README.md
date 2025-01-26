@@ -1,49 +1,81 @@
+# Wander App
 
-# Tourist Guide App
-
-Welcome to the **Tourism App**! This Flutter-based mobile application is designed to help users explore popular tourist destinations in Egypt. The app features a user-friendly interface with sections for suggestions, popular places, governments, and user profiles. Users can also add their favorite places to a dedicated favorites section.
-
-
+Welcome to the **Wander App**! This Flutter-based mobile application is designed to help users explore popular tourist destinations in Egypt. With features like user authentication, profile management, favorites, and detailed landmark information, this app ensures an enjoyable and personalized experience for its users.
 
 ## Features
 
-- **Home Page**:
-  - Displays suggestions and popular tourist destinations.
-  - Users can add places to their favorites by clicking the heart icon.
+### **Home Page**
+- Displays suggestions and popular tourist destinations.
+- Users can add places to their favorites by clicking the heart icon.
 
-- **Favorites Page**:
-  - Shows a list of places marked as favorites by the user.
-  - Items can be removed.
+### **Favorites Page**
+- Shows a list of places marked as favorites by the user.
+- Users can remove items from their favorites.
 
-- **Governments Page**:
-  - Lists Egyptian governorates.
-  - Users can tap on a governorate to view its landmarks.
+### **Governments Page**
+- Lists Egyptian governorates.
+- Users can tap on a governorate to view its landmarks.
 
-- **Landmarks Page**:
-  - Displays landmarks for a selected governorate.
-  - Users can add landmarks to their favorites.
+### **Landmarks Page**
+- Displays landmarks for a selected governorate.
+- Users can add landmarks to their favorites.
 
-- **Profile Page**:
-  - Displays user details (e.g., name, email).
+### **Profile Page**
+- Displays user details (e.g., name, email).
+- Allows users to update their information and profile picture.
+- Changes are saved locally using Shared Preferences.
 
-- **Navigation**:
-  - Bottom navigation bar for easy switching between sections.
-  - Smooth animations for page transitions.
+### **Navigation**
+- Bottom navigation bar for easy switching between sections.
+- Smooth animations for page transitions.
 
 ---
 
-## Output
+## State Management: `flutter_bloc`
 
-![logIn](https://github.com/user-attachments/assets/da394ba6-f1d8-42b5-8ae3-ce96a65fe4de)
+To enhance the application's functionality, `flutter_bloc` has been integrated with the following blocs:
+
+### **AuthenticationBloc**
+- Handles user authentication logic.
+- Stores user information after login or signup.
+
+### **ProfileBloc**
+- Enables users to update their profile information and change their profile picture.
+- Saves updated data locally using Shared Preferences.
+
+### **FavoriteBloc**
+- Manages favorite places.
+- Supports adding new places to favorites and removing them.
+
+### **LandmarkBloc**
+- Fetches landmark data for display on the screen.
+- Ensures seamless loading of landmark details.
+
+---
+
+## Screenshots
+
+### **Login Page**
+![logIn](![Screenshot 2025-01-26 172900](https://github.com/user-attachments/assets/b95cfa61-1e12-424b-b329-ea3701540ea4)
+
+### **Sign Up Page**
+![signUp]((![Screenshot 2025-01-26 172910](https://github.com/user-attachments/assets/c431bb5a-b72f-4330-bf6a-d5605c9b3003)
+
+### **Home Page**
+![home](![Screenshot 2025-01-26 172936](https://github.com/user-attachments/assets/0d5c7652-5bbb-4f4a-b9fb-94062a089161)
+
+### **Places Page**
+![places]([Screenshot 2025-01-26 172945](https://github.com/user-attachments/assets/ece02d2d-3c26-4342-a926-44e07e4d52cc)
+
+### **Landmarks Page**
+![landmark]([Screenshot 2025-01-26 172954](https://github.com/user-attachments/assets/a39ea08c-4fa5-4001-94ee-3a2b54c0a589)
+
+
+### **Favorites Page**
+![fav]([Screenshot 2025-01-26 173005](https://github.com/user-attachments/assets/2fa60580-842e-460f-af8a-fc8479cb619e)
+
+### **Profile Page**
+![profile]([Screenshot 2025-01-26 173014](https://github.com/user-attachments/assets/15980d66-c5ac-4d27-b23d-dcf792a680c7)
 
 
 
-![createsuccess](https://github.com/user-attachments/assets/f35a7527-21ff-4676-b50d-b1a3d1b85ea1)
-![signUp](https://github.com/user-attachments/assets/2a459f2f-c9cd-4b64-8b63-62e100eca85b)
-
-![landmark](https://github.com/user-attachments/assets/27026733-fc9c-42e6-b0af-c7b3f51be51f)
-![fav](https://github.com/user-attachments/assets/b3aa33de-cd2c-47da-b17e-24f41d33220c)
-![home](https://github.com/user-attachments/assets/d762bf79-554e-4ebc-869b-d6a5bddf7fa0)
-![places](https://github.com/user-attachments/assets/c1489188-7dd8-4e9c-a2ab-426708213189)
-![profile](https://github.com/user-attachments/assets/fdc9b275-0047-4d5b-89cd-8cb28af43ec2)
-![fav_1](https://github.com/user-attachments/assets/0e457906-5ab3-49d3-8893-8f47c12a13ff)
