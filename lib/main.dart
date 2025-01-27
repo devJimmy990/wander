@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wander/blocs/Favourate/FavBloc.dart';
+import 'package:wander/blocs/LandMark/LandMarkBloc.dart';
 import 'package:wander/core/routes.dart';
 import 'package:wander/home.dart';
 import 'package:wander/presentation/screens/login.dart';
@@ -26,6 +28,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ProfileBloc(), 
+        ),
+        BlocProvider(
+          create: (context) => FavoriteBloc(),
+        ),
+        BlocProvider(
+          create: (context) => LandmarkBloc(),
         ),
       ],
       child: MaterialApp(

@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wander/blocs/Favourate/FavEvent.dart';
 import 'package:wander/blocs/Favourate/FavState.dart';
-import 'package:wander/model/item.dart';
+import 'package:wander/data/model/item.dart';
+
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   FavoriteBloc() : super(FavoriteInitial()) {

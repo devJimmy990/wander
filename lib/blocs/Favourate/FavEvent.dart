@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:wander/model/item.dart';
+import 'package:wander/data/model/item.dart';
 
 abstract class FavoriteEvent extends Equatable {
   const FavoriteEvent();

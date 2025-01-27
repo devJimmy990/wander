@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:wander/data/model/item.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wander/blocs/Favourate/FavBloc.dart';
+import 'package:wander/blocs/Favourate/FavEvent.dart';
+import 'package:wander/blocs/Favourate/FavState.dart';
 
-class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({
-    super.key,
-  });
-
-  @override
-  State<FavoriteScreen> createState() => _FavoriteScreenState();
-}
-
-class _FavoriteScreenState extends State<FavoriteScreen> {
-  //List<Item> fav = UserCredential.getInstance().favorites;
-  @override
-  void initState() {
-    super.initState();
-  }
+class FavoriteScreen extends StatelessWidget {
+  const FavoriteScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: fav.isEmpty
-          ? Center(
+      body: BlocBuilder<FavoriteBloc, FavoriteState>(
+        builder: (context, state) {
+          if (state is FavoriteLoaded) {
+            final favorites = state.favorites;
+
+            return favorites.isEmpty
+                ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -51,11 +46,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 ],
               ),
             )
-          : ListView.builder(
+                : ListView.builder(
               padding: EdgeInsets.all(16.0),
-              itemCount: fav.length,
+              itemCount: favorites.length,
               itemBuilder: (context, index) {
-                final place = fav[index];
+                final place = favorites[index];
 
                 return Card(
                   color: Color(0xFFf5ebe0),
@@ -84,15 +79,18 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     trailing: IconButton(
                       icon: Icon(Icons.delete, color: Colors.grey),
                       onPressed: () {
-                        // UserCredential.getInstance()
-                        //     .removeFromFav(id: place.id);
-                        setState(() {});
+                        context.read<FavoriteBloc>().add(RemoveFromFavorites(place.id));
                       },
                     ),
                   ),
                 );
               },
-            ),
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
     );
   }
 }
