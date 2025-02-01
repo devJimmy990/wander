@@ -183,8 +183,11 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: screenHeight * 0.07,
                       minWidth: screenWidth * 0.6,
                       color: const Color(0xFFbc6c25),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          // Attempt to create a user with Firebase
+
+
                           context.read<AuthBloc>().add(
                                 SignUpRequested(
                                   email: emailController.text,

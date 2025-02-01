@@ -1,8 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:wander/core/connection.dart';
 import 'package:wander/core/shared_prefrence.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
@@ -30,7 +29,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Emitter<AuthState> emit,
 ) async {
   emit(AuthLoading());
-  try {
+  // adding firebase to create users
+  try { await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    email: event.email,
+    password: event.password,
+  );
+
     await Future.delayed(const Duration(seconds: 2));
 
     //to store user data to SharedPreferences
@@ -39,8 +43,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await SharedPreference.setString(key: 'name', value: event.name);
     await SharedPreference.setString(key: 'phone', value: event.phone);
 
-    emit(AuthAuthenticated(event.email)); 
-  } catch (e) {
+
+    
+    emit(AuthAuthenticated(event.email));
+
+    
+  }on FirebaseAuthException catch (e) {
+    emit(AuthError(e.message ?? 'Signup failed'));}
+  catch (e) {
     emit(AuthError('Signup failed: ${e.toString()}'));
   }
 }
@@ -51,6 +61,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 ) async {
   emit(AuthLoading());
   try {
+     await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: event.email,
+      password: event.password,
+    );
     // Retrieve stored user data from SharedPreferences
     final storedEmail = SharedPreference.getString(key: 'email');
     final storedPassword = SharedPreference.getString(key: 'password');
