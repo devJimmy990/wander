@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wander/core/connection.dart';
 import 'package:wander/core/shared_prefrence.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:wander/data/model/firebase_user_model.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
@@ -27,14 +30,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _onSignUpRequested(
   SignUpRequested event,
   Emitter<AuthState> emit,
+
 ) async {
   emit(AuthLoading());
+
   // adding firebase to create users
-  try { await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  try {
+    final firestoreInstance = FirebaseFirestore.instance;
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
     email: event.email,
     password: event.password,
-  );
 
+  );
+    FirebaseUserModel user = FirebaseUserModel(email: event.email,name: event.name,phone: event.phone);
+    final response = await firestoreInstance.collection('users').add(user.toFirestore());
+    debugPrint('as,db asm b${response.toString()}');
     await Future.delayed(const Duration(seconds: 2));
 
     //to store user data to SharedPreferences
@@ -51,6 +61,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }on FirebaseAuthException catch (e) {
     emit(AuthError(e.message ?? 'Signup failed'));}
   catch (e) {
+    debugPrint('e is e${e.toString()}');
     emit(AuthError('Signup failed: ${e.toString()}'));
   }
 }
