@@ -43,8 +43,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   );
     FirebaseUserModel user = FirebaseUserModel(email: event.email,name: event.name,phone: event.phone);
-    final response = await firestoreInstance.collection('users').add(user.toFirestore());
-    debugPrint('as,db asm b${response.toString()}');
+    await firestoreInstance.collection('users').add(user.toFirestore());
+
     await Future.delayed(const Duration(seconds: 2));
 
     //to store user data to SharedPreferences
