@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginScreen> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          SizedBox(height: screenHeight * 0.07),
+                          SizedBox(height: screenHeight * 0.08),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -177,15 +177,15 @@ class _LoginPageState extends State<LoginScreen> {
                                 ),
                                 labelStyle: TextStyle(
                                   color: themeState.themeMode == ThemeMode.light
-                                      ? Colors.black // Light theme label color
-                                      : Colors.white, // Dark theme label color
+                                      ? Colors.black 
+                                      : Colors.white, 
                                 ),
                               ),
                               obscureText: hiddenPassword,
                               style: TextStyle(
                                 color: themeState.themeMode == ThemeMode.light
-                                    ? Colors.black // Light theme text color
-                                    : Colors.white, // Dark theme text color
+                                    ? Colors.black 
+                                    : Colors.white, 
                               ),
                             ),
                           ),
@@ -195,7 +195,7 @@ class _LoginPageState extends State<LoginScreen> {
                               height: screenHeight * 0.07,
                               minWidth: screenWidth * 0.6,
                               color: const Color(
-                                  0xFFbc6c25), // Button color remains the same
+                                  0xFFbc6c25), 
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<AuthBloc>().add(
@@ -235,8 +235,8 @@ class _LoginPageState extends State<LoginScreen> {
                               "Don't have an account? Sign up",
                               style: TextStyle(
                                 color: themeState.themeMode == ThemeMode.light
-                                    ? Colors.blueGrey // Light theme text color
-                                    : Colors.white, // Dark theme text color
+                                    ? Colors.blueGrey 
+                                    : Colors.white, 
                               ),
                             ),
                           ),
