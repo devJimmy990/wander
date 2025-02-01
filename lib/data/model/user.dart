@@ -1,18 +1,32 @@
-
 class User {
-  final String? id;
+  final String? id; 
   final String name;
   final String email;
   final String phone;
-  final String password;
+  final String? password; 
 
   User({
     this.id,
     required this.email,
     required this.name,
     required this.phone,
-    required this.password,
+    this.password,
   });
+
+  factory User.fromFirestore(Map<String, dynamic> data, String id) {
+    return User(                 //password is not stored in Firestore for security reasons
+      id: id,
+      name: data['name'] ?? '',
+      email: data['email'] ?? '',
+      phone: data['phone'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toFirestore() => {
+        'name': name,
+        'email': email,
+        'phone': phone,
+      };
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -20,7 +34,7 @@ class User {
       name: json["name"] ?? "",
       email: json["email"] ?? "",
       phone: json["phone"] ?? "",
-      password: json["password"] ?? "",
+      password: json["password"] ?? "", 
     );
   }
 
@@ -29,12 +43,12 @@ class User {
         "email": email,
         "name": name,
         "phone": phone,
-        "password": password,
+        "password": password, 
       };
 
   @override
   String toString() =>
-      "User(id: $id, name: $name, email: $email, phone: $phone,)";
+      "User(id: $id, name: $name, email: $email, phone: $phone)";
 
   @override
   bool operator ==(Object other) =>
