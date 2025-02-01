@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "154713069402",
+    "project_id": "wander-5dde9",
+    "storage_bucket": "wander-5dde9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154713069402:android:9cd32374978f6831638563",
+        "android_client_info": {
+          "package_name": "com.example.wander"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCskXA7OTaHpsSFr4oEzC0bza7khU1YQ7M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
