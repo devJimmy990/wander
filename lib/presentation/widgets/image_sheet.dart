@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wander/blocs/profile/profile_bloc.dart';
 import 'package:wander/blocs/profile/profile_event.dart';
 
@@ -52,12 +55,40 @@ class AvatarBottomSheet extends StatelessWidget {
                       );
                   Navigator.pop(context);
                 },
-                child: Image.asset(
+                // check if image picker has value
+                child: avatarPaths[index].startsWith('assets/')?Image.asset(
                   avatarPaths[index],
-                  fit: BoxFit.cover,
-                ),
+                  fit: BoxFit.cover,) : Image.file(File(avatarPaths[index]), fit: BoxFit.cover),
               );
             },
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  context
+                      .read<ProfileBloc>()
+                      .add(SelectAvatarImage(ImageSource.camera));
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.camera_alt),
+                label: const Text("Camera"),
+              ),
+              ElevatedButton.icon(
+                onPressed: () {
+                  context
+                      .read<ProfileBloc>()
+                      .add(SelectAvatarImage(ImageSource.gallery));
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.photo_library),
+                label: const Text("Gallery"),
+              ),
+            ],
           ),
         ],
       ),

@@ -21,3 +21,8 @@ class ProfileError extends ProfileState {
 
   ProfileError(this.message);
 }
+// for image picker
+class AvatarSelected extends ProfileState {
+  final String avatarPath;
+  AvatarSelected(this.avatarPath);
+}

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wander/blocs/profile/profile_event.dart';
@@ -59,15 +61,10 @@ class ProfileScreen extends StatelessWidget {
                                       padding: const EdgeInsets.all(1),
                                       child: ClipOval(
                                         child: profile['avatarUrl'] != null
-                                            ? Image.asset(
-                                                profile['avatarUrl']!,
-                                                fit: BoxFit.cover,
-                                              )
-                                            : Icon(
-                                                Icons.person,
-                                                size: 60,
-                                                color: Colors.white,
-                                              ),
+                                            ? (profile['avatarUrl']!.startsWith('assets/')
+                                            ? Image.asset(profile['avatarUrl']!, fit: BoxFit.cover) // Load asset
+                                            : Image.file(File(profile['avatarUrl']!), fit: BoxFit.cover)) // Load file
+                                            : Icon(Icons.person, size: 60, color: Colors.white),
                                       ),
                                     ),
                                   ),
