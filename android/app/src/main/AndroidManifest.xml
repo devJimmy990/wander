@@ -1,4 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
+    <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
+    <!-- (Optional) Permission for network access if your app requires it -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- Declare that fingerprint hardware is required -->
+    <uses-feature android:name="android.hardware.fingerprint" android:required="true"/>
+
     <application
         android:label="wander"
         android:name="${applicationName}"

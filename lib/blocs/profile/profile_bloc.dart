@@ -73,6 +73,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         'avatarUrl': event.imageUrl,
       };
       emit(ProfileUpdated(updatedProfile));
+      emit(ProfileLoaded(updatedProfile));
     } catch (e) {
       emit(ProfileError('Failed to update avatar: ${e.toString()}'));
     }

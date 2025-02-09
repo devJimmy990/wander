@@ -53,7 +53,9 @@ class AvatarBottomSheet extends StatelessWidget {
                   context.read<ProfileBloc>().add(
                         UpdateAvatar(avatarPaths[index]),
                       );
-                  Navigator.pop(context);
+                  Future.delayed(Duration(milliseconds: 300), () {
+                    Navigator.pop(context);
+                  });
                 },
                 // check if image picker has value
                 child: avatarPaths[index].startsWith('assets/')?Image.asset(

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:wander/core/biometric_auth.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
@@ -26,7 +27,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       final user = userCredential.user;
       if (user != null) {
-        emit(AuthAuthenticated(user.uid)); // Pass UID to the state
+        bool biometricAuthenticated = await BiometricAuth.authenticate();
+        if (biometricAuthenticated) {
+          emit(AuthAuthenticated(user.uid)); // Pass UID to the state
+        } else {
+          emit(AuthError('Biometric authentication failed.'));
+        }
       } else {
         emit(AuthError('Failed to retrieve user information.'));
       }
