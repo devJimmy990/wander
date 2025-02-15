@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wander/blocs/LandMark/LandMarkBloc.dart';
-import 'package:wander/blocs/LandMark/LandMarkEvent.dart';
-import 'package:wander/blocs/LandMark/LandState.dart';
+import 'package:wander/controller/cubit/landmark/landmark_cubit.dart';
+import 'package:wander/controller/cubit/landmark/landmark_state.dart';
 
 class LandmarksPage extends StatelessWidget {
   final String governorate;
 
-  LandmarksPage({
+  const LandmarksPage({
     super.key,
     required this.governorate,
   });
@@ -15,7 +14,7 @@ class LandmarksPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LandmarkBloc()..add(FetchLandmarks(governorate)),
+      create: (context) => LandmarkCubit()..onFetchLandmarks(governorate),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -25,7 +24,7 @@ class LandmarksPage extends StatelessWidget {
           ),
           backgroundColor: const Color(0xFFf5ebe0),
         ),
-        body: BlocBuilder<LandmarkBloc, LandmarkState>(
+        body: BlocBuilder<LandmarkCubit, LandmarkState>(
           builder: (context, state) {
             if (state is LandmarkLoading) {
               return const Center(child: CircularProgressIndicator());

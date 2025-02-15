@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wander/presentation/screens/landmark.dart';
+import 'package:wander/presentation/features/governorates/landmark.dart';
 
 class GovernmentsScreen extends StatelessWidget {
   const GovernmentsScreen({
@@ -8,25 +8,24 @@ class GovernmentsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    final List<Map<String, String>> governorates = [
+    final List<Map<String, String>>  governorates= [
       {
         'name': 'Cairo',
-        'image': 'assets/images/cairo.jpg',
+        'image': 'assets/images/governorates/cairo.jpg',
       },
       {
         'name': 'Alexandria',
-        'image': 'assets/images/alex.jpg',
+        'image': 'assets/images/governorates/alex.jpg',
       },
       {
         'name': 'Luxor',
-        'image': 'assets/images/luxorG.jpg',
+        'image': 'assets/images/governorates/luxorG.jpg',
       },
       {
         'name': 'Aswan',
-        'image': 'assets/images/aswan.jpg',
+        'image': 'assets/images/governorates/aswan.jpg',
       }
     ];
     return Scaffold(
@@ -66,7 +65,7 @@ class GovernmentsScreen extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.2),
+                      color: Colors.black.withAlpha(20),
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Text(

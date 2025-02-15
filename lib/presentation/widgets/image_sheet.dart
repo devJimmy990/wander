@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wander/blocs/profile/profile_bloc.dart';
-import 'package:wander/blocs/profile/profile_event.dart';
 
 class AvatarBottomSheet extends StatelessWidget {
   const AvatarBottomSheet({super.key});
@@ -9,12 +6,13 @@ class AvatarBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> avatarPaths = [
-      'assets/images/signup.jpg',
-      'assets/images/avatar1.jpg',
-      'assets/images/avatar2.jpg',
-      'assets/images/avatar3.jpg',
-      'assets/images/avatar4.jpg',
-      'assets/images/avatar5.jpg',
+      // 'assets/images/signup.jpg',
+      'assets/images/avatar/avatar1.jpg',
+      'assets/images/avatar/avatar2.jpg',
+      'assets/images/avatar/avatar3.jpg',
+      'assets/images/avatar/avatar4.jpg',
+      'assets/images/avatar/avatar5.jpg',
+      'assets/images/avatar/avatar6.jpeg',
     ];
 
     return Container(
@@ -47,10 +45,10 @@ class AvatarBottomSheet extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  context.read<ProfileBloc>().add(
-                        UpdateAvatar(avatarPaths[index]),
-                      );
-                  Navigator.pop(context);
+                  // context.read<UserCubit>().
+                  //       onUpdateProfile(avatarPaths[index],
+                  //     );
+                  // Navigator.pop(context);
                 },
                 child: Image.asset(
                   avatarPaths[index],

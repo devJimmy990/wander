@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wander/data/dummy.dart';
-import 'package:wander/presentation/screens/home/suggested_places.dart';
-import 'package:wander/presentation/screens/home/popular_places.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wander/controller/cubit/user/user_cubit.dart';
+import 'package:wander/presentation/features/home/popular_places.dart';
+import 'package:wander/presentation/features/home/suggested_places.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,37 +34,66 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(18.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                "Popular Places",
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFFf5ebe0),
+        title: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Text(
+                "Welcome",
                 style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Cinzel'),
+                  fontFamily: 'Cinzel',
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            PopularPlaces(places: popularPlaces),
-            const SizedBox(height: 15),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                "Suggested Places",
+              SizedBox(width: 5),
+              Text(
+                context.read<UserCubit>().user?.name!.split(" ")[0] ?? "Guest",
                 style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Cinzel'),
+                  fontFamily: 'Cinzel',
+                  fontWeight: FontWeight.bold,
+                  fontStyle: FontStyle.italic,
+                  color: Color(0xFFbc6c25),
+                ),
               ),
-            ),
-            const SizedBox(height: 15),
-            SuggestedPlaces(places: items),
-          ],
+            ],
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  "Popular Places",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Cinzel'),
+                ),
+              ),
+              PopularPlaces(places: popularPlaces),
+              const SizedBox(height: 15),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Text(
+                  "Suggested Places",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Cinzel'),
+                ),
+              ),
+              const SizedBox(height: 15),
+              SuggestedPlaces(places: items),
+            ],
+          ),
         ),
       ),
     );
@@ -110,7 +141,7 @@ class LandmarkCard extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Colors.black.withOpacity(0.6),
+                    Colors.black.withAlpha(60),
                     Colors.transparent,
                   ],
                   begin: Alignment.bottomCenter,

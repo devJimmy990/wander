@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wander/blocs/Favourate/FavBloc.dart';
-import 'package:wander/blocs/Favourate/FavEvent.dart';
-import 'package:wander/blocs/Favourate/FavState.dart';
+import 'package:wander/core/routes.dart';
 import 'package:wander/data/model/item.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wander/controller/cubit/favorite/index.dart';
+import 'package:wander/controller/cubit/user/user_cubit.dart';
 
 class SuggestedPlaces extends StatelessWidget {
   final List<Item> places;
@@ -45,7 +44,7 @@ class SuggestedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FavoriteBloc, FavoriteState>(
+    return BlocBuilder<FavoriteCubit, FavoriteState>(
       builder: (context, state) {
         final isFavorite = state is FavoriteLoaded
             ? state.favorites.any((fav) => fav.id == item.id)
@@ -96,10 +95,28 @@ class SuggestedCard extends StatelessWidget {
                     ),
                     IconButton(
                       onPressed: () {
-                        if (isFavorite) {
-                          context.read<FavoriteBloc>().add(RemoveFromFavorites(item.id));
+                        if (context.read<UserCubit>().user == null) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Please login first.'),
+                              action: SnackBarAction(
+                                label: "Login",
+                                onPressed: () {
+                                  Navigator.pushNamed(context, Routes.login);
+                                },
+                              ),
+                            ),
+                          );
                         } else {
-                          context.read<FavoriteBloc>().add(AddToFavorites(item));
+                          if (isFavorite) {
+                            context
+                                .read<FavoriteCubit>()
+                                .onRemoveFromFavorites(item.id);
+                          } else {
+                            context
+                                .read<FavoriteCubit>()
+                                .onAddToFavorites(item);
+                          }
                         }
                       },
                       icon: Icon(

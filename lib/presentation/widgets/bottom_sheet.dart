@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wander/blocs/profile/profile_bloc.dart';
-import 'package:wander/blocs/profile/profile_event.dart';
+import 'package:wander/controller/cubit/user/user_cubit.dart';
+import 'package:wander/data/model/user.dart';
 
 class EditUserInfoBottomSheet extends StatefulWidget {
-  final Map<String, dynamic> currentProfile;
+  final User user;
 
-  const EditUserInfoBottomSheet({super.key, required this.currentProfile});
+  const EditUserInfoBottomSheet({super.key, required this.user});
 
   @override
   State<EditUserInfoBottomSheet> createState() =>
@@ -23,10 +23,10 @@ class _EditUserInfoBottomSheetState extends State<EditUserInfoBottomSheet> {
   @override
   void initState() {
     super.initState();
-    _nameController.text = widget.currentProfile['name'] ?? '';
-    _emailController.text = widget.currentProfile['email'] ?? '';
-    _phoneController.text = widget.currentProfile['phone'] ?? '';
-    _passwordController.text = widget.currentProfile['password'] ?? '';
+    _nameController.text = widget.user.name ?? '';
+    _emailController.text = widget.user.email ?? '';
+    _phoneController.text = widget.user.phone ?? '';
+    _passwordController.text = widget.user.password ?? '';
   }
 
   @override
@@ -128,14 +128,11 @@ class _EditUserInfoBottomSheetState extends State<EditUserInfoBottomSheet> {
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  context.read<ProfileBloc>().add(
-                        UpdateProfile({
-                          'name': _nameController.text,
-                          'email': _emailController.text,
-                          'phone': _phoneController.text,
-                          'password': _passwordController.text,
-                        }),
-                      );
+                  context.read<UserCubit>().onUpdateProfile(User(
+                      name: _nameController.text,
+                      phone: _phoneController.text,
+                      email: _emailController.text,
+                      avatar: ""));
                   Navigator.pop(context);
                 }
               },

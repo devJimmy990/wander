@@ -1,40 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wander/blocs/profile/profile_event.dart';
 import 'package:wander/core/routes.dart';
-import 'package:wander/blocs/profile/profile_bloc.dart';
-import 'package:wander/blocs/profile/profile_state.dart';
-import 'package:wander/presentation/widgets/bottom_sheet.dart';
+import 'package:wander/controller/cubit/auth/auth_cubit.dart';
+import 'package:wander/controller/cubit/user/index.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wander/presentation/widgets/image_sheet.dart';
+import 'package:wander/presentation/widgets/bottom_sheet.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  String _hashPassword(String password) {
-    return '*' * password.length;
-  }
+class AccountScreen extends StatelessWidget {
+  const AccountScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return BlocProvider(
-      create: (context) => ProfileBloc()..add(LoadProfile()),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: BlocBuilder<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            if (state is ProfileLoading) {
-              return Center(child: CircularProgressIndicator());
-            } else if (state is ProfileLoaded || state is ProfileUpdated) {
-              final profile = (state is ProfileLoaded)
-                  ? state.profile
-                  : (state as ProfileUpdated).updatedProfile;
-
-              return Stack(
-                children: [
-                  Center(
+    return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () => Navigator.pushNamed(context, Routes.settings),
+          ),
+          if (context.read<UserCubit>().user != null)
+            IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: () {
+                BlocProvider.of<AuthenticationCubit>(context)
+                    .onLogoutRequested();
+                Navigator.pushReplacementNamed(context, Routes.login);
+              },
+            )
+        ],
+      ),
+      body: context.read<UserCubit>().user == null
+          ? Column(
+              spacing: 8,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text('Please login first', textAlign: TextAlign.center),
+                FractionallySizedBox(
+                  widthFactor: .3,
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.pushNamed(context, Routes.login),
+                    child: Text('Login'),
+                  ),
+                )
+              ],
+            )
+          : BlocBuilder<UserCubit, UserState>(
+              builder: (context, state) {
+                if (state is UserLoading) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (state is UserLoaded) {
+                  final user = state.user;
+                  return Center(
                     child: Container(
                       height: screenHeight * 0.6,
                       width: screenWidth * 0.9,
@@ -58,9 +78,9 @@ class ProfileScreen extends StatelessWidget {
                                     child: Padding(
                                       padding: const EdgeInsets.all(1),
                                       child: ClipOval(
-                                        child: profile['avatarUrl'] != null
+                                        child: user.avatar != null
                                             ? Image.asset(
-                                                profile['avatarUrl']!,
+                                                user.avatar!,
                                                 fit: BoxFit.cover,
                                               )
                                             : Icon(
@@ -111,50 +131,25 @@ class ProfileScreen extends StatelessWidget {
                             indent: 10,
                             endIndent: 10,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Full Name: ${profile['name'] ?? 'Not provided'}',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildProfileDetails(
+                                label: "Full Name",
+                                value: user.name ?? 'Not provided',
                               ),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Email: ${profile['email'] ?? 'Not provided'}',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                              _buildProfileDetails(
+                                label: "Email",
+                                value: user.email ?? 'Not provided',
                               ),
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Phone Number: ${profile['phone'] ?? 'Not provided'}',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+                              _buildProfileDetails(
+                                label: "Phone Number",
+                                value: user.phone ?? 'Not provided',
                               ),
-                            ),
+                            ],
                           ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Password: ${_hashPassword(profile['password'] ?? '')}',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: screenHeight * 0.02),
+                          Spacer(),
                           Center(
                             child: MaterialButton(
                               height: screenHeight * 0.07,
@@ -166,9 +161,9 @@ class ProfileScreen extends StatelessWidget {
                                   builder: (context) {
                                     return BlocProvider.value(
                                       value:
-                                          BlocProvider.of<ProfileBloc>(context),
+                                          BlocProvider.of<UserCubit>(context),
                                       child: EditUserInfoBottomSheet(
-                                        currentProfile: profile,
+                                        user: user,
                                       ),
                                     );
                                   },
@@ -190,31 +185,26 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top: screenHeight * 0.13,
-                    right: screenWidth * 0.08,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.logout_sharp,
-                        color: Color(0xFFbc6c25),
-                        size: 32,
-                      ),
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, Routes.login);
-                      },
-                    ),
-                  ),
-                ],
-              );
-            } else if (state is ProfileError) {
-              return Center(child: Text(state.message));
-            } else {
-              return Center(child: Text('Something went wrong!'));
-            }
-          },
-        ),
-      ),
+                  );
+                } else if (state is UserError) {
+                  return Center(child: Text(state.errorMessage));
+                } else {
+                  return Center(child: Text('Something went wrong!'));
+                }
+              },
+            ),
     );
   }
 }
+
+Widget _buildProfileDetails({required String label, required String value}) =>
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        '$label: $value',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
