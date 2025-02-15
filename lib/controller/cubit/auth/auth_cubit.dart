@@ -3,14 +3,17 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wander/core/biometric_auth.dart';
 import 'package:wander/core/shared_preference.dart';
 import 'package:wander/controller/cubit/auth/auth_state.dart';
+
 // ignore: library_prefixes
 import 'package:wander/data/model/user.dart' as UserModel;
 
 class AuthenticationCubit extends Cubit<AuthenticationState> {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   AuthenticationCubit() : super(AuthenticationInitial());
 
   Future<void> onLoginRequested(
@@ -23,9 +26,18 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       );
       final user = userCredential.user;
       if (user != null) {
-        _getUserData(user);
-      } else {
+        bool biometricAuthenticated = await BiometricAuth.authenticate();
+        if (biometricAuthenticated) {
+          _getUserData(user);
+        } else {
+          emit(AuthenticationError('Biometric authentication failed.'));
+
+        }
+
+      }else{
         emit(AuthenticationError('Failed to retrieve user information.'));
+
+
       }
     } on FirebaseAuthException catch (e) {
       emit(AuthenticationError('Login failed: ${e.message}'));

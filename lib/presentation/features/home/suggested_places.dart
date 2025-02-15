@@ -115,7 +115,7 @@ class SuggestedCard extends StatelessWidget {
                           } else {
                             context
                                 .read<FavoriteCubit>()
-                                .onAddToFavorites(item);
+                                .onAddToFavorites(item, context.read<UserCubit>().user!.id.toString());
                           }
                         }
                       },
