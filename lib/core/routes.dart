@@ -1,6 +1,11 @@
 class Routes {
-  static const String splash = '/splash';
+  // Auth Routes {login, signup}
   static const String login = '/login';
   static const String signup = '/signup';
-  static const String home = '/home';
+
+  // Settings Route
+  static const String settings = '/settings';
+
+  // Landing Route
+  static const String landing = '/landing';
 }
