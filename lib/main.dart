@@ -1,54 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:wander/core/index.dart';
+import 'package:wander/controller/cubit/index.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:wander/blocs/Favourate/FavBloc.dart';
-import 'package:wander/blocs/LandMark/LandMarkBloc.dart';
-import 'package:wander/blocs/auth/auth_bloc.dart';
-import 'package:wander/blocs/profile/profile_bloc.dart';
-import 'package:wander/blocs/theme/theme_bloc.dart';
-import 'package:wander/core/routes.dart';
-import 'package:wander/core/shared_prefrence.dart';
-import 'package:wander/home.dart';
-import 'package:wander/presentation/screens/login.dart';
-import 'package:wander/presentation/screens/signup.dart';
-import 'firebase_options.dart';
+import 'package:wander/presentation/features/_screens.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await SharedPreference.initialize();
-
-  final userId = SharedPreference.getString(key: 'userId') ?? '';
-
-  runApp(MyApp(userId: userId));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final String userId;
-
-  const MyApp({super.key, required this.userId});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => AuthBloc()),
-        BlocProvider(create: (context) => ProfileBloc()),
-        BlocProvider(create: (context) => FavoriteBloc()),
-        BlocProvider(create: (context) => LandmarkBloc()),
-        BlocProvider(create: (context) => ThemeBloc()),
+        BlocProvider(create: (context) => LandmarkCubit()),
+        BlocProvider(create: (context) => FavoriteCubit()),
+        BlocProvider(create: (context) => AuthenticationCubit()),
+        BlocProvider(create: (context) => UserCubit()..loadUser()),
+        BlocProvider(create: (context) => ThemeCubit()..loadTheme()),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        routes: {
-          Routes.home: (context) => const MainScreen(),
-          Routes.login: (context) => const LoginScreen(),
-          Routes.signup: (context) => const SignupScreen(),
-        },
-        initialRoute: Routes.login,
-      ),
+      child: BlocBuilder<ThemeCubit, ThemeState>(builder: (context, state) {
+        ThemeData themeData = ThemeData.light();
+
+        if (state is ThemeLoaded || state is ToggleThemeState) {
+          themeData = (state as dynamic).theme;
+        }
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: themeData,
+          routes: {
+            // Auth Screens {Login, Signup}
+            Routes.login: (context) => const LoginScreen(),
+            Routes.signup: (context) => const SignupScreen(),
+
+            // Setting Screen
+            Routes.settings: (context) => const AccountSettingsScreen(),
+
+            // Landing Screen
+            Routes.landing: (context) => const LandingScreen(),
+          },
+          initialRoute: Routes.landing,
+        );
+      }),
     );
   }
 }

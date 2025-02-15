@@ -1,32 +1,14 @@
 class User {
-  final String? id; 
-  final String name;
-  final String email;
-  final String phone;
-  final String? password; 
+  final String? id, password, avatar, name, email, phone;
 
   User({
     this.id,
-    required this.email,
-    required this.name,
-    required this.phone,
+    this.name,
+    this.phone,
+    this.email,
     this.password,
+    this.avatar = "assets/images/avatar/default.jpg",
   });
-
-  factory User.fromFirestore(Map<String, dynamic> data, String id) {
-    return User(                 //password is not stored in Firestore for security reasons
-      id: id,
-      name: data['name'] ?? '',
-      email: data['email'] ?? '',
-      phone: data['phone'] ?? '',
-    );
-  }
-
-  Map<String, dynamic> toFirestore() => {
-        'name': name,
-        'email': email,
-        'phone': phone,
-      };
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -34,16 +16,23 @@ class User {
       name: json["name"] ?? "",
       email: json["email"] ?? "",
       phone: json["phone"] ?? "",
-      password: json["password"] ?? "", 
+      avatar: json["avatar"] ?? "",
     );
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "email": email,
         "name": name,
+        "email": email,
         "phone": phone,
-        "password": password, 
+        "avatar": avatar,
+      };
+
+  Map<String, dynamic> toCachedJson() => {
+        "id": id,
+        "name": name,
+        "email": email,
+        "phone": phone,
+        "avatar": avatar,
       };
 
   @override
@@ -63,20 +52,4 @@ class User {
   @override
   int get hashCode =>
       id.hashCode ^ name.hashCode ^ email.hashCode ^ phone.hashCode;
-
-  User copyWith({
-    String? id,
-    String? name,
-    String? email,
-    String? phone,
-    String? password,
-  }) {
-    return User(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      phone: phone ?? this.phone,
-      password: password ?? this.password,
-    );
-  }
 }
