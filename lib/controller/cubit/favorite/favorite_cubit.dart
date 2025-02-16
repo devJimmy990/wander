@@ -23,11 +23,17 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       emit(FavoriteLoaded(_favorites));
     }
   }
-
-  void onRemoveFromFavorites(String id) {
+/// will remove item from favorite page and fire store.
+  void onRemoveFromFavorites(Item item, String userId,String id) async{
     int index = _favorites.indexWhere((item) => item.id == id);
     if (index != -1) {
       _favorites.removeAt(index);
+      await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('favorites')
+          .doc(item.title)
+          .delete();
       emit(FavoriteLoaded(_favorites));
     }
   }

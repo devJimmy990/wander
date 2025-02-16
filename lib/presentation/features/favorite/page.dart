@@ -97,7 +97,7 @@ class FavoriteScreen extends StatelessWidget {
                                   onPressed: () {
                                     context
                                         .read<FavoriteCubit>()
-                                        .onRemoveFromFavorites(place.id);
+                                        .onRemoveFromFavorites( place, context.read<UserCubit>().user!.id.toString(),place.id);
                                   },
                                 ),
                               ),

@@ -111,7 +111,7 @@ class SuggestedCard extends StatelessWidget {
                           if (isFavorite) {
                             context
                                 .read<FavoriteCubit>()
-                                .onRemoveFromFavorites(item.id);
+                                .onRemoveFromFavorites(item, context.read<UserCubit>().user!.id.toString(),item.id);
                           } else {
                             context
                                 .read<FavoriteCubit>()
