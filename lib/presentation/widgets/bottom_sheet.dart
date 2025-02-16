@@ -18,7 +18,7 @@ class _EditUserInfoBottomSheetState extends State<EditUserInfoBottomSheet> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _passwordController = TextEditingController();
+
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _EditUserInfoBottomSheetState extends State<EditUserInfoBottomSheet> {
     _nameController.text = widget.user.name ?? '';
     _emailController.text = widget.user.email ?? '';
     _phoneController.text = widget.user.phone ?? '';
-    _passwordController.text = widget.user.password ?? '';
+
   }
 
   @override
@@ -34,7 +34,7 @@ class _EditUserInfoBottomSheetState extends State<EditUserInfoBottomSheet> {
     _nameController.dispose();
     _emailController.dispose();
     _phoneController.dispose();
-    _passwordController.dispose();
+
     super.dispose();
   }
 
@@ -103,21 +103,7 @@ class _EditUserInfoBottomSheetState extends State<EditUserInfoBottomSheet> {
               },
             ),
             SizedBox(height: 16),
-            TextFormField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter your password';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 50),
+
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 fixedSize: const Size(250, 60),
@@ -126,13 +112,18 @@ class _EditUserInfoBottomSheetState extends State<EditUserInfoBottomSheet> {
                 ),
                 backgroundColor: Color(0xFFbc6c25),
               ),
+              // to update the data on fire store and UI
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  context.read<UserCubit>().onUpdateProfile(User(
-                      name: _nameController.text,
-                      phone: _phoneController.text,
-                      email: _emailController.text,
-                      avatar: ""));
+                  final updatedUser = User(
+                    id: widget.user.id,
+                    name: _nameController.text,
+                    phone: _phoneController.text,
+                    email: _emailController.text,
+                    avatar: widget.user.avatar,
+                  );
+
+                  context.read<UserCubit>().onUpdateProfile(updatedUser);
                   Navigator.pop(context);
                 }
               },

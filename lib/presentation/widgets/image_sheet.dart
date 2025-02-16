@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wander/controller/cubit/user/user_cubit.dart';
+import 'package:wander/data/model/user.dart';
 
 class AvatarBottomSheet extends StatelessWidget {
   const AvatarBottomSheet({super.key});
@@ -45,10 +48,19 @@ class AvatarBottomSheet extends StatelessWidget {
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
-                  // context.read<UserCubit>().
-                  //       onUpdateProfile(avatarPaths[index],
-                  //     );
-                  // Navigator.pop(context);
+                  final currentUser = context.read<UserCubit>().user;
+                  if (currentUser != null) {
+                    final updatedUser = User(
+                      id: currentUser.id,
+                      name: currentUser.name,
+                      phone: currentUser.phone,
+                      email: currentUser.email,
+                      avatar: avatarPaths[index],
+                    );
+
+                    context.read<UserCubit>().onUpdateProfile(updatedUser);
+                  }
+                  Navigator.pop(context);
                 },
                 child: Image.asset(
                   avatarPaths[index],

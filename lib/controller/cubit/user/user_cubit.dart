@@ -1,13 +1,16 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wander/core/shared_preference.dart';
+
 // ignore: library_prefixes
 import 'package:wander/data/model/user.dart' as UserModel;
 import 'package:wander/controller/cubit/user/user_state.dart';
 
 class UserCubit extends Cubit<UserState> {
   UserModel.User? _user;
+
   UserCubit() : super(UserInitial());
 
   void loadUser() async {
@@ -43,6 +46,14 @@ class UserCubit extends Cubit<UserState> {
       _user = user;
       await SharedPreference.setString(
           key: 'user', value: _user!.toJson().toString());
+
+      /// update the data on firebase
+      await FirebaseFirestore.instance.collection('users').doc(user.id).update({
+        'avatar': user.avatar,
+        'name': user.name,
+        'phone': user.phone,
+
+      });
 
       emit(UserLoaded(_user!));
     } catch (e) {
