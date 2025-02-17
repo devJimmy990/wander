@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:wander/core/routes.dart';
 import 'package:wander/controller/cubit/auth/auth_cubit.dart';
@@ -79,10 +81,7 @@ class AccountScreen extends StatelessWidget {
                                       padding: const EdgeInsets.all(1),
                                       child: ClipOval(
                                         child: user.avatar != null
-                                            ? Image.asset(
-                                                user.avatar!,
-                                                fit: BoxFit.cover,
-                                              )
+                                            ? _buildProfileImage(user.avatar!)
                                             : Icon(
                                                 Icons.person,
                                                 size: 60,
@@ -208,3 +207,15 @@ Widget _buildProfileDetails({required String label, required String value}) =>
         ),
       ),
     );
+
+/// todo refine
+
+Widget _buildProfileImage(String avatarPath) {
+  if (avatarPath.startsWith('assets/')) {
+    // Load predefined avatar from assets
+    return Image.asset(avatarPath, fit: BoxFit.cover);
+  } else {
+    // Load user-uploaded image from device storage
+    return Image.file(File(avatarPath), fit: BoxFit.cover);
+  }
+}

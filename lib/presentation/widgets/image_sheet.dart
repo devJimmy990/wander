@@ -1,5 +1,9 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:wander/controller/cubit/user/user_cubit.dart';
 import 'package:wander/data/model/user.dart';
 
@@ -62,15 +66,56 @@ class AvatarBottomSheet extends StatelessWidget {
                   }
                   Navigator.pop(context);
                 },
-                child: Image.asset(
-                  avatarPaths[index],
-                  fit: BoxFit.cover,
-                ),
-              );
+                child: avatarPaths[index].startsWith('assets/')?Image.asset(avatarPaths[index],fit: BoxFit.cover,):Image.file(File(avatarPaths[index]), fit: BoxFit.cover),);
             },
+          ),
+          const SizedBox(height: 32),
+          /// toDo refine later
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  _pickImage(context, ImageSource.camera);
+                },
+                icon: const Icon(Icons.camera_alt),
+                label: const Text("Camera"),
+              ),
+              ElevatedButton.icon(
+                onPressed: () {
+                  _pickImage(context, ImageSource.gallery);
+                },
+                icon: const Icon(Icons.photo_library),
+                label: const Text("Gallery"),
+              ),
+            ],
           ),
         ],
       ),
     );
+  }
+
+
+  /// todo refine later
+  void _updateUserAvatar(BuildContext context, String imagePath) {
+    final currentUser = context.read<UserCubit>().user;
+    if (currentUser != null) {
+      final updatedUser = User(
+        id: currentUser.id,
+        name: currentUser.name,
+        phone: currentUser.phone,
+        email: currentUser.email,
+        avatar: imagePath, // Use selected image path
+      );
+      context.read<UserCubit>().onUpdateProfile(updatedUser);
+    }
+    Navigator.pop(context);
+  }
+
+  Future<void> _pickImage(BuildContext context, ImageSource source) async {
+    final pickedFile = await ImagePicker().pickImage(source: source);
+    if (pickedFile == null) return;
+
+    _updateUserAvatar(context, pickedFile.path);
   }
 }
