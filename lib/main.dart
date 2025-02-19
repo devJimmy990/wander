@@ -4,6 +4,7 @@ import 'package:wander/controller/cubit/index.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:wander/presentation/features/_screens.dart';
+import 'package:wander/presentation/features/maps/map_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,6 +45,8 @@ class MyApp extends StatelessWidget {
 
             // Landing Screen
             Routes.landing: (context) => const LandingScreen(),
+            // Maps screen
+            Routes.mapping: (context) => const MapScreen(),
           },
           initialRoute: Routes.landing,
         );

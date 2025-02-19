@@ -8,4 +8,6 @@ class Routes {
 
   // Landing Route
   static const String landing = '/landing';
+  //maps
+  static const String mapping = '/mapping';
 }

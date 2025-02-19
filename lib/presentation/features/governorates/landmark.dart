@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wander/controller/cubit/landmark/landmark_cubit.dart';
 import 'package:wander/controller/cubit/landmark/landmark_state.dart';
+import 'package:wander/presentation/features/maps/map_view.dart';
 
 class LandmarksPage extends StatelessWidget {
   final String governorate;
@@ -76,6 +77,31 @@ class LandmarksPage extends StatelessWidget {
                             ),
                           ),
                         ),
+                        TextButton(
+                            onPressed: () {
+                              final double lat =
+                                  double.tryParse(landmark['lat']!) ?? 0;
+                              final double lng =
+                                  double.tryParse(landmark['lng']!) ?? 0;
+                              String name = landmark['name']!;
+
+                              if (lat != 0 && lng != 0) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MapScreen(
+                                        latitude: lat, longitude: lng, name: name,),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content:
+                                          Text("Location data not available")),
+                                );
+                              }
+                            },
+                            child: Text("See location"))
                       ],
                     ),
                   );
