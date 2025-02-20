@@ -30,10 +30,10 @@ class KImages {
 
   //Government Image
 
-  static const String aswanImage = 'assets/images/aswan.jpg';
-  static const String cairoImage = 'assets/images/cairo.jpg';
-  static const String alexImage = 'assets/images/alex.jpg';
-  static const String luxorImage = 'assets/images/luxorG.jpg';
+  static const String aswanImage = 'assets/images/governorates/aswan.jpg';
+  static const String cairoImage = 'assets/images/governorates/cairo.jpg';
+  static const String alexImage = 'assets/images/governorates/alex.jpg';
+  static const String luxorImage = 'assets/images/governorates/luxorG.jpg';
 
   // Landmark Images
   static const String egyptianMuseum = 'assets/images/landmarks/EM.jpg';
