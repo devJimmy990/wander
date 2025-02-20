@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wander/controller/cubit/landmark/landmark_state.dart';
+import 'package:wander/utils/constants/image_strings.dart';
 
 class LandmarkCubit extends Cubit<LandmarkState> {
   LandmarkCubit() : super(LandmarkInitial());
@@ -13,7 +14,7 @@ class LandmarkCubit extends Cubit<LandmarkState> {
       'Cairo': [
         {
           'name': 'Egyptian Museum',
-          'image': 'assets/images/landmarks/EM.jpg',
+          'image': KImages.egyptianMuseum,
           'description':
               'A museum dedicated to the history of Egypt and its people.',
           'lat': '30.0478',
@@ -21,7 +22,7 @@ class LandmarkCubit extends Cubit<LandmarkState> {
         },
         {
           'name': 'Salah Al-Din Al-Ayoubi Citadel',
-          'image': 'assets/images/landmarks/mma.jpeg',
+          'image': KImages.salahAlDinCitadel,
           'description': 'It is one of the oldest citadels in the world.',
           'lat': '30.0265',
           'lng': '31.2272',
@@ -30,14 +31,14 @@ class LandmarkCubit extends Cubit<LandmarkState> {
       'Alexandria': [
         {
           'name': 'Qaitbay Citadel',
-          'image': 'assets/images/landmarks/alexQ.jpg',
+          'image': KImages.qaitbayCitadel,
           'description': 'It is one of the oldest citadels in the world.',
           'lat': '31.2135',
           'lng': '29.8858',
         },
         {
           'name': 'Bibliotheca Alexandrina',
-          'image': 'assets/images/landmarks/alexL.jpg',
+          'image': KImages.bibliothecaAlexandrina ,
           'description':
               'It is one of the most important libraries in the world.',
           'lat': '31.2089',
@@ -47,7 +48,7 @@ class LandmarkCubit extends Cubit<LandmarkState> {
       'Luxor': [
         {
           'name': 'Valley of the Kings',
-          'image': 'assets/images/landmarks/ht.jpg',
+          'image': KImages.valleyOfTheKings,
           'description':
               'It is one of the most important archaeological sites in the world.',
           'lat': '25.7402',
@@ -55,7 +56,7 @@ class LandmarkCubit extends Cubit<LandmarkState> {
         },
         {
           'name': 'Karnak Temple',
-          'image': 'assets/images/landmarks/KT.jpg',
+          'image': KImages.karnakTemple,
           'description': 'It is one of the oldest temples in the world.',
           'lat': '25.7186',
           'lng': '32.6573',
@@ -64,14 +65,14 @@ class LandmarkCubit extends Cubit<LandmarkState> {
       'Aswan': [
         {
           'name': 'Philae Temple',
-          'image': 'assets/images/landmarks/PT.jpg',
+          'image': KImages.philaeTemple,
           'description': 'It is one of the oldest temples in the world.',
           'lat': '24.8612',
           'lng': '32.8855',
         },
         {
           'name': 'Ramesses Temple',
-          'image': 'assets/images/landmarks/RT.jpg',
+          'image': KImages.ramessesTemple,
           'description': 'It has a breathtaking light show.',
           'lat': '22.3372',
           'lng': '31.6258',

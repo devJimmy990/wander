@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wander/presentation/features/governorates/landmark.dart';
+import 'package:wander/utils/constants/image_strings.dart';
 
 class GovernmentsScreen extends StatelessWidget {
   const GovernmentsScreen({
@@ -13,19 +14,19 @@ class GovernmentsScreen extends StatelessWidget {
     final List<Map<String, String>>  governorates= [
       {
         'name': 'Cairo',
-        'image': 'assets/images/governorates/cairo.jpg',
+        'image': KImages.cairoImage,
       },
       {
         'name': 'Alexandria',
-        'image': 'assets/images/governorates/alex.jpg',
+        'image': KImages.alexImage,
       },
       {
         'name': 'Luxor',
-        'image': 'assets/images/governorates/luxorG.jpg',
+        'image': KImages.luxorImage,
       },
       {
         'name': 'Aswan',
-        'image': 'assets/images/governorates/aswan.jpg',
+        'image': KImages.aswanImage,
       }
     ];
     return Scaffold(

@@ -6,6 +6,7 @@ import 'package:wander/core/routes.dart';
 import 'package:wander/core/validation.dart';
 import 'package:wander/controller/cubit/auth/index.dart';
 import 'package:wander/data/model/user.dart';
+import 'package:wander/utils/constants/image_strings.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -86,7 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(1),
                         child: ClipOval(
-                          child: Image.asset('assets/images/logo.png'),
+                          child: Image.asset(KImages.logoApp),
                         ),
                       ),
                     ),
@@ -266,7 +267,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   Positioned(
                     child: Image.asset(
-                      'assets/images/get-started.jpg',
+                      KImages.footerSignupImage,
                       fit: BoxFit.cover,
                       width: screenWidth,
                       height: screenHeight * 0.2,

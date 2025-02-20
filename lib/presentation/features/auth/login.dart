@@ -4,6 +4,7 @@ import 'package:wander/core/validation.dart';
 import 'package:wander/controller/cubit/auth/index.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wander/controller/cubit/user/user_cubit.dart';
+import 'package:wander/utils/constants/image_strings.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -54,7 +55,7 @@ class _LoginPageState extends State<LoginScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(1),
                             child: ClipOval(
-                              child: Image.asset('assets/images/logo.png'),
+                              child: Image.asset(KImages.logoApp),
                             ),
                           ),
                         ),
@@ -175,7 +176,7 @@ class _LoginPageState extends State<LoginScreen> {
                       ),
                       Positioned(
                         child: Image.asset(
-                          'assets/images/login.png',
+                          KImages.footerLoginImage,
                           fit: BoxFit.cover,
                           width: screenWidth,
                           height: screenHeight * 0.5,

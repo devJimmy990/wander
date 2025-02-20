@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:wander/controller/cubit/user/user_cubit.dart';
 import 'package:wander/data/model/user.dart';
+import 'package:wander/utils/constants/image_strings.dart';
 
 class AvatarBottomSheet extends StatelessWidget {
   const AvatarBottomSheet({super.key});
@@ -14,12 +15,12 @@ class AvatarBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<String> avatarPaths = [
       // 'assets/images/signup.jpg',
-      'assets/images/avatar/avatar1.jpg',
-      'assets/images/avatar/avatar2.jpg',
-      'assets/images/avatar/avatar3.jpg',
-      'assets/images/avatar/avatar4.jpg',
-      'assets/images/avatar/avatar5.jpg',
-      'assets/images/avatar/avatar6.jpeg',
+      KImages.avatar1,
+      KImages.avatar2,
+      KImages.avatar3,
+      KImages.avatar4,
+      KImages.avatar5,
+      KImages.avatar6,
     ];
 
     return Container(
@@ -112,7 +113,7 @@ class AvatarBottomSheet extends StatelessWidget {
     Navigator.pop(context);
   }
 
-  Future<void> _pickImage(BuildContext context, ImageSource source) async {
+  Future<void> _pickImage(context, ImageSource source) async {
     final pickedFile = await ImagePicker().pickImage(source: source);
     if (pickedFile == null) return;
 
