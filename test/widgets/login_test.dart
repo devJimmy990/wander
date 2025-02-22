@@ -40,8 +40,8 @@ void main() {
     final emailField = find.byType(TextFormField).first;
     final passwordField = find.byType(TextFormField).last;
 
-    await tester.enterText(emailField, "test@example.com");
-    await tester.enterText(passwordField, "password123");
+    await tester.enterText(emailField, "test@gmail.com");
+    await tester.enterText(passwordField, "testpassword123");
 
     await tester.tap(find.text("Login"));
     await tester.pump();
