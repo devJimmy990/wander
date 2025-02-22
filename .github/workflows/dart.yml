@@ -16,12 +16,21 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.6.1'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.16.0'
           cache: true
+
+      - name: Debug Dart and Flutter versions
+        run: |
+          dart --version
+          flutter --version
 
       - name: Install dependencies
         run: flutter pub get  # Install Flutter dependencies
