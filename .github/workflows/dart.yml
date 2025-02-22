@@ -27,14 +27,6 @@ jobs:
           flutter-version: '3.16.0'
           cache: true
 
-
-
-
-      - name: Check Flutter & Dart Versions
-        run: |
-          flutter --version
-          dart --version  # Verify Dart SDK version
-
       - name: Install dependencies
         run: flutter pub get  # Install Flutter dependencies
 
