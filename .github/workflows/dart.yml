@@ -19,13 +19,13 @@ jobs:
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1
         with:
-          sdk: ">=3.6.1 <3.9.9"
+          sdk: '3.6.1'
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.16.0'
-          cache: false
+          cache: true
 
 
 
