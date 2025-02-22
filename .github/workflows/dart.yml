@@ -30,8 +30,7 @@ jobs:
           flutter-version: '3.16.0'
           cache: false  # Disable caching if needed
 
-      - name: Install dependencies
-        run: flutter pub get  # Install Flutter dependencies
+
 
       - name: Run unit tests
         run: flutter test test/unit  # Run all unit tests
