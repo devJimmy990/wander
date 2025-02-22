@@ -48,7 +48,7 @@ dependencies:
   cloud_firestore: ^5.6.2
   provider: ^6.1.2
   local_auth: ^2.3.0
-  image_picker: ^1.1.2
+  image_picker: ^1.0.8
   google_maps_flutter: ^2.5.3
   mockito: ^5.4.2
 
