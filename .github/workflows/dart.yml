@@ -13,30 +13,36 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup Dart SDK
+      # 🚨 REMOVE OLD DART SDK TO AVOID VERSION CONFLICTS
+      - name: Remove Default Dart SDK
+        run: |
+          sudo apt-get remove dart -y
+          sudo rm -rf /usr/lib/dart
+
+      # 🚨 FORCE INSTALL DART SDK 3.6.1
+      - name: Setup Dart SDK 3.6.1
         uses: dart-lang/setup-dart@v1
         with:
           sdk: '3.6.1'
 
+      # 🚨 INSTALL FLUTTER WITH CORRECT DART VERSION
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.16.0'
-          cache: true
+          flutter-version: '3.16.0'  # Compatible with Dart 3.6.1
+          cache: true  # Cache Flutter for faster runs
 
-
-
-
-      - name: Check Flutter & Dart Versions
+      # 🚨 VERIFY THE INSTALLED VERSIONS
+      - name: Check Installed Versions
         run: |
-          flutter --version
-          dart --version  # Verify Dart SDK version
+          dart --version  # Should show Dart 3.6.1
+          flutter --version  # Should match correct Flutter version
 
       - name: Install dependencies
-        run: flutter pub get  # Install Flutter dependencies
+        run: flutter pub get  # Install dependencies
 
       - name: Run unit tests
         run: flutter test test/unit  # Run all unit tests
