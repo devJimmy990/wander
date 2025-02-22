@@ -33,7 +33,7 @@ class KImages {
   static const String aswanImage = 'assets/images/governorates/aswan.jpg';
   static const String cairoImage = 'assets/images/governorates/cairo.jpg';
   static const String alexImage = 'assets/images/governorates/alex.jpg';
-  static const String luxorImage = 'assets/images/governorates/luxorG.jpg';
+  static const String luxorImage = 'assets/images/governorates/luxorGov.jpg';
 
   // Landmark Images
   static const String egyptianMuseum = 'assets/images/landmarks/EM.jpg';
