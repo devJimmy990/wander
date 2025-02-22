@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Setup Dart SDK
-        uses: dart-lang/setup-dart@v1
+        uses: dart-lang/setup-dart@v4
         with:
           sdk: '3.7.0'
 
