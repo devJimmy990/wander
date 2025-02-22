@@ -19,18 +19,16 @@ jobs:
       - name: Setup Dart SDK
         uses: dart-lang/setup-dart@v1
         with:
-          sdk: '3.6.1'
+          sdk: '3.7.0'  # Explicitly set the Dart SDK version
+
+      - name: Debug Dart SDK version
+        run: dart --version  # Verify the Dart SDK version
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.16.0'
-          cache: true
-
-      - name: Debug Dart and Flutter versions
-        run: |
-          dart --version
-          flutter --version
+          cache: false  # Disable caching if needed
 
       - name: Install dependencies
         run: flutter pub get  # Install Flutter dependencies
