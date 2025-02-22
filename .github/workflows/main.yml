@@ -1,0 +1,39 @@
+name: Flutter CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v1
+
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.7.0'
+
+      - name: Debug Dart SDK version
+        run: dart --version  # Verify the Dart SDK version
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '3.16.0'
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get  # Install Flutter dependencies
+
+      - name: Run unit tests
+        run: flutter test test/unit  # Run all unit tests
+
+      - name: Run widget tests
+        run: flutter test test/widget  # Run all widget tests
