@@ -14,18 +14,18 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
 
       - name: Setup Dart SDK
-        uses: dart-lang/setup-dart@v1
+        uses: dart-lang/setup-dart@v2
         with:
-          sdk: '3.7.0'  # Explicitly set the Dart SDK version
+          sdk: '3.7.0'
 
       - name: Debug Dart SDK version
         run: dart --version  # Verify the Dart SDK version
 
       - name: Setup Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v3
         with:
           flutter-version: '3.16.0'
           cache: false
