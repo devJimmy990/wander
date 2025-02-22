@@ -39,7 +39,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   intl_phone_field: ^3.2.0
   shared_preferences: ^2.3.5
-  flutter_localization: ^0.3.1
+  flutter_localization: any
   curved_navigation_bar: ^1.0.6
   
   # add firebase packages
