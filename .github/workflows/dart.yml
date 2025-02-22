@@ -22,6 +22,12 @@ jobs:
           flutter-version: '3.16.0'
           cache: true
 
+      - name: Setup Dart SDK
+        uses: dart-lang/setup-dart@v1
+        with:
+              sdk: '3.7.1'
+
+
       - name: Check Flutter & Dart Versions
         run: |
           flutter --version
