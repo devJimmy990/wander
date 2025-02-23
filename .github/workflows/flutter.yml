@@ -36,7 +36,7 @@ jobs:
         run: flutter pub get  # Install Flutter dependencies
 
       - name: Run widget tests
-        run: flutter test test/widget  # Will all widget tests
+        run: flutter test test/widgets  # Will all widget tests
 
       - name: Run unit tests
         run: flutter test test/unit  # Will run all unit tests
