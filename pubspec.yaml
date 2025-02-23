@@ -51,6 +51,7 @@ dependencies:
   image_picker: ^1.0.8
   google_maps_flutter: ^2.5.3
   mockito: ^5.4.2
+  firebase_core_platform_interface: ^5.4.0
 
 dev_dependencies:
   flutter_test:
