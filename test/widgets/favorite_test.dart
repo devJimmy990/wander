@@ -30,10 +30,10 @@ void main() {
           home: MultiBlocProvider(
             providers: [
               BlocProvider<UserCubit>(
-                create: (_) => FakeUserCubitLoggedOut(),
+                create: (context) => FakeUserCubitLoggedOut(),
               ),
               BlocProvider<FavoriteCubit>(
-                create: (_) => FakeFavoriteCubit(),
+                create: (context) => FakeFavoriteCubit(),
               ),
             ],
             child: const FavoriteScreen(),
@@ -55,10 +55,10 @@ void main() {
           home: MultiBlocProvider(
             providers: [
               BlocProvider<UserCubit>(
-                create: (_) => FakeUserCubitLoggedIn(),
+                create: (context) => FakeUserCubitLoggedIn(),
               ),
               BlocProvider<FavoriteCubit>(
-                create: (_) => FakeFavoriteCubit(),
+                create: (context) => FakeFavoriteCubit(),
               ),
             ],
             child: const FavoriteScreen(),

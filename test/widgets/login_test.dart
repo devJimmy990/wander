@@ -6,6 +6,7 @@ import 'package:wander/controller/cubit/auth/auth_cubit.dart';
 import 'package:wander/controller/cubit/auth/auth_state.dart';
 import 'package:wander/presentation/features/auth/login.dart';
 
+/// A fake AuthenticationCubit that bypasses real authentication logic.
 class FakeAuthenticationCubit extends AuthenticationCubit {
   @override
   Future<void> onLoginRequested({required String email, required String password}) async {
@@ -14,7 +15,15 @@ class FakeAuthenticationCubit extends AuthenticationCubit {
 }
 
 Future<void> main() async {
+  // Ensure the binding is initialized.
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  // Set a mock handler to prevent native channel calls.
+  FirebaseCorePlatform.instance.setMethodCallHandler((call) async {
+    return null;
+  });
+
+  // Initialize Firebase with dummy options.
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: 'fake_api_key',
@@ -37,7 +46,7 @@ Future<void> main() async {
     // Let the widget build completely.
     await tester.pumpAndSettle();
 
-    // Verify that key UI elements are present.
+    // Verify key UI elements are present.
     expect(find.text("Wander"), findsOneWidget);
     expect(find.text("Email"), findsOneWidget);
     expect(find.text("Password"), findsOneWidget);
