@@ -3,83 +3,73 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wander/controller/cubit/auth/auth_cubit.dart';
+import 'package:wander/controller/cubit/auth/auth_state.dart';
 import 'package:wander/presentation/features/auth/login.dart';
+
+class FakeAuthenticationCubit extends AuthenticationCubit {
+  @override
+  Future<void> onLoginRequested({required String email, required String password}) async {
+    emit(AuthenticationInitial());
+  }
+}
 
 Future<void> main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'fake_api_key',
+      appId: 'fake_app_id',
+      messagingSenderId: 'fake_sender_id',
+      projectId: 'fake_project_id',
+    ),
+  );
 
-  testWidgets('LoginScreen UI renders correctly', (WidgetTester tester) async {
+  testWidgets('LoginScreen renders UI elements and validates input', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
         home: BlocProvider<AuthenticationCubit>(
-          create: (_) => AuthenticationCubit(),
+          create: (_) => FakeAuthenticationCubit(),
           child: const LoginScreen(),
         ),
       ),
     );
 
+    // Let the widget build completely.
+    await tester.pumpAndSettle();
+
+    // Verify that key UI elements are present.
     expect(find.text("Wander"), findsOneWidget);
     expect(find.text("Email"), findsOneWidget);
     expect(find.text("Password"), findsOneWidget);
     expect(find.text("Login"), findsOneWidget);
-  });
 
-  testWidgets('Empty fields trigger validation messages', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: BlocProvider<AuthenticationCubit>(
-          create: (_) => AuthenticationCubit(),
-          child: const LoginScreen(),
-        ),
-      ),
-    );
-
+    // Tap the Login button without entering any text.
     final loginButton = find.text("Login");
     await tester.tap(loginButton);
     await tester.pump();
 
+    // Expect validation messages for empty email and password.
     expect(find.text("Email is required."), findsOneWidget);
     expect(find.text("Password is required."), findsOneWidget);
-  });
 
-  testWidgets('Invalid email triggers error message', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: BlocProvider<AuthenticationCubit>(
-          create: (_) => AuthenticationCubit(),
-          child: const LoginScreen(),
-        ),
-      ),
-    );
-
-    final emailField = find.byType(TextFormField).first;
-    await tester.enterText(emailField, "invalidEmail");
-    await tester.tap(find.text("Login"));
-    await tester.pump();
-
-    expect(find.text("Email must contain '@'."), findsOneWidget);
-  });
-
-  testWidgets('Valid login input does not trigger validation errors', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: BlocProvider<AuthenticationCubit>(
-          create: (_) => AuthenticationCubit(),
-          child: const LoginScreen(),
-        ),
-      ),
-    );
-
+    // Enter an invalid email and a valid password.
     final emailField = find.byType(TextFormField).first;
     final passwordField = find.byType(TextFormField).last;
-
-    await tester.enterText(emailField, "test@gmail.com");
-    await tester.enterText(passwordField, "testpassword123");
-
-    await tester.tap(find.text("Login"));
+    await tester.enterText(emailField, "invalidEmail");
+    await tester.enterText(passwordField, "password123");
+    await tester.tap(loginButton);
     await tester.pump();
 
+    // Expect the invalid email error message.
+    expect(find.text("Email must contain '@'."), findsOneWidget);
+
+    // Now enter valid values.
+    await tester.enterText(emailField, "test@gmail.com");
+    await tester.enterText(passwordField, "password123");
+    await tester.tap(loginButton);
+    await tester.pump();
+
+    // With valid input, validation errors should disappear.
     expect(find.text("Email is required."), findsNothing);
     expect(find.text("Password is required."), findsNothing);
   });
