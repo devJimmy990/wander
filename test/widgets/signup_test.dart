@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wander/controller/cubit/auth/auth_cubit.dart';
 import 'package:wander/presentation/features/auth/signup.dart';
 
 void main() {
   testWidgets('SignupScreen UI renders correctly', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: SignupScreen()));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthenticationCubit>(
+          create: (_) => AuthenticationCubit(),
+          child: const SignupScreen(),
+        ),
+      ),
+    );
 
     expect(find.text("Welcome"), findsOneWidget);
     expect(find.text("Full Name"), findsOneWidget);
@@ -14,7 +23,14 @@ void main() {
   });
 
   testWidgets('Empty fields trigger validation messages', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: SignupScreen()));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthenticationCubit>(
+          create: (_) => AuthenticationCubit(),
+          child: const SignupScreen(),
+        ),
+      ),
+    );
 
     final signUpButton = find.text("Sign Up");
     await tester.tap(signUpButton);
@@ -27,7 +43,14 @@ void main() {
   });
 
   testWidgets('Invalid email triggers error message', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: SignupScreen()));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthenticationCubit>(
+          create: (_) => AuthenticationCubit(),
+          child: const SignupScreen(),
+        ),
+      ),
+    );
 
     final emailField = find.byType(TextFormField).at(1);
     await tester.enterText(emailField, "invalidEmail");
@@ -38,7 +61,14 @@ void main() {
   });
 
   testWidgets('Password mismatch triggers validation error', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: SignupScreen()));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthenticationCubit>(
+          create: (_) => AuthenticationCubit(),
+          child: const SignupScreen(),
+        ),
+      ),
+    );
 
     final passwordField = find.byType(TextFormField).at(2);
     final confirmPasswordField = find.byType(TextFormField).at(3);
@@ -53,7 +83,14 @@ void main() {
   });
 
   testWidgets('Valid signup input does not trigger validation errors', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: SignupScreen()));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthenticationCubit>(
+          create: (_) => AuthenticationCubit(),
+          child: const SignupScreen(),
+        ),
+      ),
+    );
 
     final nameField = find.byType(TextFormField).first;
     final emailField = find.byType(TextFormField).at(1);

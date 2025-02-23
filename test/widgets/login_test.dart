@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wander/controller/cubit/auth/auth_cubit.dart';
 import 'package:wander/presentation/features/auth/login.dart';
 
 void main() {
   testWidgets('LoginScreen UI renders correctly', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: LoginScreen()));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthenticationCubit>(
+          create: (_) => AuthenticationCubit(),
+          child: const LoginScreen(),
+        ),
+      ),
+    );
 
     expect(find.text("Wander"), findsOneWidget);
     expect(find.text("Email"), findsOneWidget);
@@ -13,7 +22,14 @@ void main() {
   });
 
   testWidgets('Empty fields trigger validation messages', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: LoginScreen()));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthenticationCubit>(
+          create: (_) => AuthenticationCubit(),
+          child: const LoginScreen(),
+        ),
+      ),
+    );
 
     final loginButton = find.text("Login");
     await tester.tap(loginButton);
@@ -24,7 +40,14 @@ void main() {
   });
 
   testWidgets('Invalid email triggers error message', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: LoginScreen()));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthenticationCubit>(
+          create: (_) => AuthenticationCubit(),
+          child: const LoginScreen(),
+        ),
+      ),
+    );
 
     final emailField = find.byType(TextFormField).first;
     await tester.enterText(emailField, "invalidEmail");
@@ -35,7 +58,14 @@ void main() {
   });
 
   testWidgets('Valid login input does not trigger validation errors', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: LoginScreen()));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: BlocProvider<AuthenticationCubit>(
+          create: (_) => AuthenticationCubit(),
+          child: const LoginScreen(),
+        ),
+      ),
+    );
 
     final emailField = find.byType(TextFormField).first;
     final passwordField = find.byType(TextFormField).last;

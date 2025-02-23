@@ -4,7 +4,7 @@ import 'package:wander/presentation/features/governorates/page.dart';
 
 void main() {
   testWidgets('GovernmentsScreen UI renders correctly', (WidgetTester tester) async {
-    await tester.pumpWidget(MaterialApp(home: GovernmentsScreen()));
+    await tester.pumpWidget(const MaterialApp(home: GovernmentsScreen()));
 
     expect(find.text("Cairo"), findsOneWidget);
     expect(find.text("Alexandria"), findsOneWidget);
