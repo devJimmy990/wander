@@ -43,8 +43,8 @@ void main() {
     final passwordField = find.byType(TextFormField).at(2);
     final confirmPasswordField = find.byType(TextFormField).at(3);
 
-    await tester.enterText(passwordField, "password123");
-    await tester.enterText(confirmPasswordField, "wrongpassword");
+    await tester.enterText(passwordField, "Test@password123");
+    await tester.enterText(confirmPasswordField, "Testwrongpassword");
 
     await tester.tap(find.text("Sign Up"));
     await tester.pump();
@@ -60,10 +60,10 @@ void main() {
     final passwordField = find.byType(TextFormField).at(2);
     final confirmPasswordField = find.byType(TextFormField).at(3);
 
-    await tester.enterText(nameField, "John Doe");
-    await tester.enterText(emailField, "john@example.com");
-    await tester.enterText(passwordField, "password123");
-    await tester.enterText(confirmPasswordField, "password123");
+    await tester.enterText(nameField, "ahmed");
+    await tester.enterText(emailField, "ahmed@gmail.com");
+    await tester.enterText(passwordField, "Test@123");
+    await tester.enterText(confirmPasswordField, "Test@123");
 
     await tester.tap(find.text("Sign Up"));
     await tester.pump();
