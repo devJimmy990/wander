@@ -1,16 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wander/controller/cubit/auth/auth_cubit.dart';
 import 'package:wander/controller/cubit/auth/auth_state.dart';
 import 'package:wander/presentation/features/auth/signup.dart';
-import 'package:wander/data/model/user.dart';
 
-class FakeAuthenticationCubitForSignup extends AuthenticationCubit {
-  @override
-  Future<void> onSignUpRequested(User model) async {
+
+class AuthenticationCubit extends Cubit<AuthenticationState> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  AuthenticationCubit() : super(AuthenticationInitial());
+
+  Future<void> onSignUpRequested(model) async {
     // Immediately emit AccountCreated without calling Firebase.
-    await Future.delayed(Duration.zero);
+    await Future.delayed(const Duration(seconds: 1));
     emit(AccountCreated());
   }
 }
@@ -19,7 +24,7 @@ void main() {
   testWidgets('SignupScreen test account signup displays success dialog', (WidgetTester tester) async {
     await tester.pumpWidget(
       BlocProvider<AuthenticationCubit>(
-        create: (_) => FakeAuthenticationCubitForSignup(),
+        create: (_) => AuthenticationCubit(),
         child: const MaterialApp(home: SignupScreen()),
       ),
     );
