@@ -1,10 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wander/controller/cubit/auth/auth_cubit.dart';
 import 'package:wander/presentation/features/auth/signup.dart';
 
-void main() {
+Future<void> main() async {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   testWidgets('SignupScreen UI renders correctly', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
