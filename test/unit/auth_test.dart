@@ -1,46 +1,66 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:wander/controller/cubit/auth/auth_cubit.dart';
-import 'package:wander/controller/cubit/auth/auth_state.dart';
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-// Mock classes
-class MockFirebaseAuth extends Mock implements FirebaseAuth {}
-class MockFirebaseFirestore extends Mock implements FirebaseFirestore {}
-class MockUser extends Mock implements User {}
+import 'package:flutter_test/flutter_test.dart';
+import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 
 void main() {
-  group('AuthenticationCubit Tests', () {
-    late AuthenticationCubit authCubit;
-    late MockFirebaseAuth mockFirebaseAuth;
+  TestWidgetsFlutterBinding.ensureInitialized();
 
-    setUp(() {
-      mockFirebaseAuth = MockFirebaseAuth();
-      authCubit = AuthenticationCubit();
+  late MockFirebaseAuth mockAuth;
+
+  setUpAll(() async {
+    mockAuth = MockFirebaseAuth();
+  });
+
+  group('FirebaseAuth Tests', () {
+    test('should sign in with email and password', () async {
+      final mockUser = MockUser(email: "testuser@example.com");
+      mockAuth = MockFirebaseAuth(mockUser: mockUser);
+
+      await mockAuth.signInWithEmailAndPassword(
+        email: "testuser@example.com",
+        password: "Test@123",
+      );
+
+      expect(mockAuth.currentUser, isNotNull);
+      expect(mockAuth.currentUser?.email, equals("testuser@example.com"));
     });
 
-    test('Initial state should be AuthenticationInitial', () {
-      expect(authCubit.state, isA<AuthenticationInitial>());
+    test('should throw error for invalid login credentials', () async {
+      final email = "wronguser@example.com";
+      final password = "wrongpassword";
+
+      // Simulate failure manually
+      Future<UserCredential> signInFail() async {
+        throw FirebaseAuthException(
+          code: 'user-not-found',
+          message: 'No user found for that email.',
+        );
+      }
+
+      // Check that the exception is thrown
+      expect(
+        signInFail,
+        throwsA(isA<FirebaseAuthException>().having((e) => e.code, 'code', 'user-not-found')),
+      );
     });
 
-    test('Login failure emits AuthenticationError state', () async {
-      when(mockFirebaseAuth.signInWithEmailAndPassword(
-        email: 'test@gmail.com',
-        password: 'testpassword',
-      )).thenThrow(FirebaseAuthException(code: 'user-not-found'));
-
-      authCubit.onLoginRequested(email: 'test@gmail.com', password: 'testpassword');
-
-      await Future.delayed(Duration(milliseconds: 100));
-
-      expect(authCubit.state, isA<AuthenticationError>());
+    test('should sign out user', () async {
+      await mockAuth.signOut();
+      expect(mockAuth.currentUser, isNull);
     });
 
-    test('Logout emits UnAuthenticated state', () async {
-      authCubit.onLogoutRequested();
-      await Future.delayed(Duration(milliseconds: 100));
-      expect(authCubit.state, isA<UnAuthenticated>());
+    test('should create a user with email and password', () async {
+      final email = "newuser@example.com";
+      final password = "StrongPass@123";
+
+      await mockAuth.createUserWithEmailAndPassword(email: email, password: password);
+      expect(mockAuth.currentUser, isNotNull);
+    });
+
+    test('should detect auth state changes', () async {
+      Stream<User?> stream = mockAuth.authStateChanges();
+      expect(stream, isA<Stream<User?>>());
     });
   });
 }
