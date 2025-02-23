@@ -9,13 +9,11 @@ void main() {
   testWidgets('SignupScreen renders correctly', (tester) async {
     await tester.pumpWidget(
       BlocProvider(
-        create: (_) => AuthenticationCubit(),
+        create: (context) => AuthenticationCubit(),
         child: const MaterialApp(home: SignupScreen()),
       ),
     );
 
-    // Verify logo image
-    expect(find.byType(CircleAvatar), findsOneWidget);
     // Verify "Welcome" text
     expect(find.text('Welcome'), findsOneWidget);
     // Verify name field

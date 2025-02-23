@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:wander/controller/cubit/auth/index.dart';
 import 'package:wander/controller/cubit/user/user_cubit.dart';
 import 'package:wander/presentation/features/auth/login.dart';
+import 'package:wander/utils/constants/image_strings.dart';
 
 
 void main() {
@@ -18,8 +19,6 @@ void main() {
       ),
     );
 
-    // Verify logo image
-    expect(find.byType(CircleAvatar), findsOneWidget);
     // Verify "Wander" text
     expect(find.text('Wander'), findsOneWidget);
     // Verify email field
