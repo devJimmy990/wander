@@ -15,6 +15,9 @@ void main() {
       ),
     );
 
+    // Allow all asynchronous events to settle.
+    await tester.pumpAndSettle();
+
     expect(find.text("No favorites yet!"), findsOneWidget);
     expect(find.text("Add some places to your favorites."), findsOneWidget);
   });
