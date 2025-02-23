@@ -17,12 +17,12 @@ class FavoriteScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Please login first', textAlign: TextAlign.center),
+                const Text('Please login first', textAlign: TextAlign.center),
                 FractionallySizedBox(
                   widthFactor: .3,
                   child: ElevatedButton(
                     onPressed: () => Navigator.pushNamed(context, Routes.login),
-                    child: Text('Login'),
+                    child: const Text('Login'),
                   ),
                 )
               ],
@@ -33,7 +33,7 @@ class FavoriteScreen extends StatelessWidget {
                   final favorites = state.favorites;
 
                   return favorites.isEmpty
-                      ? Center(
+                      ? const Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -63,14 +63,14 @@ class FavoriteScreen extends StatelessWidget {
                           ),
                         )
                       : ListView.builder(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           itemCount: favorites.length,
                           itemBuilder: (context, index) {
                             final place = favorites[index];
 
                             return Card(
-                              color: Color(0xFFf5ebe0),
-                              margin: EdgeInsets.only(bottom: 16.0),
+                              color: const Color(0xFFf5ebe0),
+                              margin: const EdgeInsets.only(bottom: 16.0),
                               child: ListTile(
                                 leading: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -83,17 +83,17 @@ class FavoriteScreen extends StatelessWidget {
                                 ),
                                 title: Text(
                                   place.title,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                subtitle: Text(
+                                subtitle: const Text(
                                   'No description available',
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 trailing: IconButton(
-                                  icon: Icon(Icons.delete, color: Colors.grey),
+                                  icon: const Icon(Icons.delete, color: Colors.grey),
                                   onPressed: () {
                                     context
                                         .read<FavoriteCubit>()
@@ -105,7 +105,7 @@ class FavoriteScreen extends StatelessWidget {
                           },
                         );
                 } else {
-                  return Center(
+                  return const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
